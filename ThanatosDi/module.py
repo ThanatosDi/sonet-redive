@@ -1,5 +1,6 @@
 import base64
-from random import randint
+import hashlib
+from random import randint, randrange
 
 import msgpack
 import requests  # requests
@@ -154,3 +155,38 @@ class HTTPClient:
                 return print(f'resp.status_code : {str(resp.status_code)}')
         except Exception as e:
             return print(f'HTTPClient.make_request : {str(e)}')
+
+
+    def call(self, path, args):
+        vid_iv = "%016d" % randrange(10**16)
+        args["timezone"] = "09:00:00"
+        args["viewer_id"] = vid_iv + base64.b64encode(
+            encrypt_cbc(str(self.viewer_id), vid_iv,
+                        VIEWER_ID_KEY))
+        plain = base64.b64encode(msgpack.packb(args))
+        # I don't even
+        key = base64.b64encode("".join("%x" % randrange(65536) for i in range(32)))[:32]
+        msg_iv = self.udid.replace("-","").decode("hex")
+        body = base64.b64encode(encrypt_cbc(plain, msg_iv, key) + key)
+        sid = self.sid if self.sid else str(self.viewer_id) + self.udid
+        headers = {
+            "PARAM": hashlib.sha1(self.udid + str(self.viewer_id) + path + plain).hexdigest(),
+            "KEYCHAIN": "",
+            "USER-ID": self.lolfuscate(str(self.user)),
+            "CARRIER": "google",
+            "UDID": UDID.encode(self.udid),
+            "APP-VER": "1.3.0",
+            "RES-VER": str(self.res_ver),
+            "IDFA": "",
+            "PROCESSOR-TYPE": "ARMv7 VFPv3 NEON",
+            "IP-ADDRESS": "127.0.0.1",
+            "DEVICE-NAME": "Nexus 42",
+            "X-Unity-Version": "2017.4.2f2",
+            "SID": hashlib.md5(sid + SID_KEY).hexdigest(),
+            "GRAPHICS-DEVICE-NAME": "3dfx Voodoo2 (TM)",
+            "DEVICE-ID": hashlib.md5("Totally a real Android").hexdigest(),
+            "PLATFORM-OS-VERSION": "Android OS 13.3.7 / API-42 (XYZZ1Y/74726f6c6c)",
+            "DEVICE": "2",
+            "Content-Type": "application/x-www-form-urlencoded", # lies
+            "User-Agent": "Dalvik/2.1.0 (Linux; U; Android 13.3.7; Nexus 42 Build/XYZZ1Y)",
+        }
