@@ -1,6 +1,7 @@
 import base64
 from random import randint
 
+import msgpack
 import requests  # requests
 from Crypto.Cipher import AES  # pycryptodome.
 from Crypto.Util import Padding
@@ -126,6 +127,19 @@ class UDID:
 
     def chr(self, code):
         return chr(int(code))
+
+
+class MSP:
+    def __init__(self, data):
+        self.data = data
+
+    @property
+    def pack(self):
+        return msgpack.packb(self.data)
+
+    @property
+    def unpack(self):
+        return msgpack.unpackb(bytes(self.data),raw=False)
 
 
 class HTTPClient:
