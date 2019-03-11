@@ -112,8 +112,11 @@ class UDID:
 class HTTPClient:
     """ HTTPClient class post data to server and return response. """
 
-    def make_request(self, method, endpoint, headers=None, data=None):
-        with requests.request(method, endpoint, headers=headers, data=data) as resp:
-            if resp.status_code == 200:
-                resp = resp.encoding('utf-8')
-                return resp.text
+    def make_request(self, method, endpoint, headers=None, data=None, timeout=5):
+        try:
+            with requests.request(method, endpoint, headers=headers, data=data,timeout=timeout) as resp:
+                if resp.status_code == 200:
+                    resp = resp.encoding('utf-8')
+                    return resp.text
+        except Exception as e:
+            return print(f'HTTPClient.make_request : {str(e)}')
