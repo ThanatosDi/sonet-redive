@@ -1,8 +1,11 @@
 import base64
 from random import randint
 
-import requests #requests
-from Crypto.Cipher import AES #pycryptodome
+import requests  # requests
+from Crypto.Cipher import AES  # pycryptodome.
+from Crypto.Util import Padding
+
+requests.urllib3.disable_warnings()
 
 
 class AESCBC:
@@ -17,13 +20,13 @@ class AESCBC:
         encrypt data
     AESCBC.b(s:str)
         convert s(str) to bytes"""
-    )
+        )
 
     @staticmethod
     def decrypt(key, iv, data):
         try:
             cryptor = AES.new(key, AES.MODE_CBC, iv)
-            new = cryptor.decrypt(data)
+            new = Padding.unpad(cryptor.decrypt(data), 16)
             return new
         except Exception as e:
             return print(f'AESCBC.decrypt : {str(e)}')
@@ -32,7 +35,7 @@ class AESCBC:
     def encrypt(key, iv, data):
         try:
             cryptor = AES.new(key, AES.MODE_CBC, iv)
-            new = cryptor.encrypt(data)
+            new = cryptor.encrypt(Padding.pad(data, 16))
             return new
         except Exception as e:
             return print(f'AESCBC.encrypt : {str(e)}')
@@ -45,33 +48,49 @@ class AESCBC:
             return print(f'string.b : {str(e)}')
 
 
-class B64:
+class Base64:
     """ base64 encode and decode function. """
 
-    def __init__(self):
-        print("""base64 encode and decode function.\n   B64.encode(s:str)\n   B64.decode(s:str)""")
+    def __init__(self, s):
+        self.content = None
+        self.s = s
 
-    @staticmethod
-    def encode(s:str):
+    @property
+    def encode(self):
         """ encode string to base64 """
         try:
-            return base64.b64encode(str(s))
+            return base64.b64encode(bytes(self.s))
         except Exception as e:
             return print(f'B64.encode : {str(e)}')
 
-    @staticmethod
-    def decode(s:str):
+    @property
+    def decode(self):
         """ decode string to base64 """
         try:
-            return base64.b64decode(str(s))
+            self.content = base64.b64decode(str(self.s))
+            return self.content
         except Exception as e:
             return print(f'B64.decode : {str(e)}')
+
+    @property
+    def key(self):
+        if not self.content:
+            self.content = Base64(str(self.s)).decode
+        key = self.content[-32:]
+        return key
+
+    @property
+    def data(self):
+        if not self.content:
+            self.content = Base64(str(self.s)).decode
+        data = self.content[0:-32]
+        return data
 
 
 class UDID:
     """UDID encode and decode function. UDID.encode(string), UDID.decode(string)"""
     @staticmethod
-    def encode(s:str):
+    def encode(s: str):
         arr = []
         for i in range(len(s)):
             c = s[i]
@@ -80,7 +99,7 @@ class UDID:
         return UDID()._04x(len(s)) + ''.join(arr) + UDID().createRandomNumberString(32)
 
     @staticmethod
-    def decode(s:str):
+    def decode(s: str):
         l = int(str(s[0:4]), 16)
         e = ''
         for i in range(6, len(s), 4):
@@ -112,11 +131,12 @@ class UDID:
 class HTTPClient:
     """ HTTPClient class post data to server and return response. """
 
-    def make_request(self, method, endpoint, headers=None, data=None, timeout=5):
+    def make_request(self, method, endpoint, headers=None, data=None, timeout=5, verify=False):
+        """HTTPClient.make_request(self, method, endpoint, headers=None, data=None, timeout=5)"""
         try:
-            with requests.request(method, endpoint, headers=headers, data=data,timeout=timeout) as resp:
+            with requests.request(method, endpoint, headers=headers, data=data, timeout=timeout, verify=verify) as resp:
                 if resp.status_code == 200:
-                    resp = resp.encoding('utf-8')
                     return resp.text
+                return print(f'resp.status_code : {str(resp.status_code)}')
         except Exception as e:
             return print(f'HTTPClient.make_request : {str(e)}')
