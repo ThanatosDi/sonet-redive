@@ -37,3 +37,8 @@ use base64 decode or encode data.
 clinet = HTTPClient()
 client.make_request(method, endpoint, headers=None, data=None, timeout=5, verify=False)
 ```
+
+# Reference
+https://github.com/marcan/deresuteme  
+https://toyobayashi.github.io/2018/04/01/CGSS%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8mishiro%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B/#more  
+https://github.com/esterTion/unity-texture-toolkit  
