@@ -157,7 +157,7 @@ class HTTPClient:
             return print(f'HTTPClient.make_request : {str(e)}')
 
 
-    def call(self, path, args):
+""" def call(self, path, args):
         vid_iv = "%016d" % randrange(10**16)
         args["timezone"] = "09:00:00"
         args["viewer_id"] = vid_iv + base64.b64encode(
@@ -190,3 +190,4 @@ class HTTPClient:
             "Content-Type": "application/x-www-form-urlencoded", # lies
             "User-Agent": "Dalvik/2.1.0 (Linux; U; Android 13.3.7; Nexus 42 Build/XYZZ1Y)",
         }
+ """
