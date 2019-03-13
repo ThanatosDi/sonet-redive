@@ -1,3 +1,12 @@
+* [Import](#Import)
+* [Use](#Use)
+    * AESCBC
+    * Base64
+    * UDID
+    * HTTPClient
+* Endpoint list
+* Reference
+
 # Import
 ```python
 form module import *
@@ -25,6 +34,9 @@ use base64 decode or encode data.
 | Base64(data).data | bytes |
 
 ## UDID
+In packet header name is **`SHORT_UDID`**  
+value like this : **`000940;246<267=254>853?023@371A105B497C982757386309871755712519102590610`**  
+value decode is **`123456789`**
 
 | Python code | return type |
 | ------ | ------ |
@@ -39,6 +51,8 @@ client.make_request(method, endpoint, headers=None, data=None, timeout=5, verify
 ```
 
 # Reference
-https://github.com/marcan/deresuteme  
-https://toyobayashi.github.io/2018/04/01/CGSS%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8mishiro%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B/#more  
-https://github.com/esterTion/unity-texture-toolkit  
+[(GitHub) marcan/deresuteme](https://github.com/marcan/deresuteme)  
+[deresuteme デレステ解析ノート](https://subdiox.github.io/deresute/)  
+[(GitHub) esterTion/unity-texture-toolkit](https://github.com/esterTion/unity-texture-toolkit)  
+[CGSS桌面应用mishiro背后的故事](https://toyobayashi.github.io/2018/04/01/CGSS%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8mishiro%E8%83%8C%E5%90%8E%E7%9A%84%E6%95%85%E4%BA%8B/#more)  
+
