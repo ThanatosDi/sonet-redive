@@ -1,9 +1,9 @@
-# IMPORT
+# Import
 ```python
 form module import *
 ```
 
-# USE
+# Use
 
 ## AESCBC
 use AES_CBC decrypt or encrypt data.  
