@@ -26,7 +26,6 @@ class AESCBC:
 
     @staticmethod
     def decrypt(key, iv, data):
-        """use aes-cbc decrypt data"""
         try:
             cryptor = AES.new(key, AES.MODE_CBC, iv)
             new = Padding.unpad(cryptor.decrypt(data), 16)
@@ -36,7 +35,6 @@ class AESCBC:
 
     @staticmethod
     def encrypt(key, iv, data):
-        """use aes-cbc encrypt data"""
         try:
             cryptor = AES.new(key, AES.MODE_CBC, iv)
             new = cryptor.encrypt(Padding.pad(data, 16))
@@ -142,7 +140,7 @@ class MSP:
 
     @property
     def unpack(self):
-        return msgpack.unpackb(bytes(self.data), raw=False)
+        return msgpack.unpackb(bytes(self.data),raw=False)
 
 
 class HTTPClient:
@@ -159,22 +157,7 @@ class HTTPClient:
             return print(f'HTTPClient.make_request : {str(e)}')
 
 
-class ID:
-    """ ID class, viewer_id etc...  """
-    @staticmethod
-    def viewerid( vid):
-        """ return viewer_id value """
-        iv = '%016d' % randrange(10**16)
-        print(iv)
-        #iv + Base64(AESCBC.encrypt(
-                #'s%5VNQ(H$&Bqb6#3+78h29!Ft4wSg)ex', iv, vid)).encode
-        
-        new = AESCBC.encrypt(b's%5VNQ(H$&Bqb6#3+78h29!Ft4wSg)ex', str.encode(iv), str.encode(vid))
-        print(Base64(new).encode)
-        
-
-
-"""     def call(self, path, args):
+""" def call(self, path, args):
         vid_iv = "%016d" % randrange(10**16)
         args["timezone"] = "09:00:00"
         args["viewer_id"] = vid_iv + base64.b64encode(
