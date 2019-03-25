@@ -1,7 +1,7 @@
 import module
 
-response = 'XBRPXgtHUwZ36qLoWj70deNEjQlYYmsuk47c9+190wdYrAi5xufpke2IKvldp4flREmt0FYb5pGfgjtjb5slOItq85v5OjzhgAmx2P34kw3tTPn3OzhvK5SXwkipj06SwdF+jANNaki/8KxYtFdkohDy6D1S8iQk3MAsSvEWtkl5yYvdl5wJwAPa3JrsXynx2slObS3u0jSoRJgVtfuCDFM/agpU6WTFbzZlAk2ZLjf44/BOdXy5B9PrZvPHXvXLybcSkW/LsaJhQT4/gjXqAU4/yh+nVr352wCZfxppOA2S9+1N07fhdxRAiP+zxrWgHXITecwIiiwOzROa5X7iymU2OTNlZjZlNTY0N2RhYzNmZTNmOGE5OTQzYjg1N2Jh'
-de_UDID = '707498d3ef554b8298bc866f6078c627'
+response = 'ZlGhRKbSk/R9kpKjdaehLHNBTX4mtfgP01hnO6cgP2MQXNC1gd4HO0yLNEeh+hp3o1oN3M3IjuvJqw4mppR9paQwVPAu8ibK/XMA0vGvQRotfXjv5F0QOdg/tpi9pWcKJ2zvQiOmq2VUzf6aNV8W7QyYZPBr1Z8AICXzKVATdX5MxqngOe4/+zRWAwoOrOM/+sHNPh3TXknCipJvvmVjmXY3cF/Yj4z42JkykRLufZN96BlIkFwYVdA3sge6dFA7a5xqSDemBTeGGwC/rHLjwQMBcOnrgGzVW09mSm0bGM3d6OXNcHDLmPahE9A2FhnFDWluxMrxXdMOzCpI7Wkj0atwi25mxLg6reFlbLGlQ0gKkjE0laE6OHv9GilxWfN1HKB3rZAgo3BoTkm0qz4zXnEHZBo+B2uGhgf+p3MuxAbbNY5WuOg5f2GI7IR6Vbr/YmZNe59jshw4hJvt7XpNoBmCaAuXz9Ipa1Cv5RUnzJEi78YCjPIbEnZI3A3ZoWYgYGj/Vc1CKbWy2m2T2yhi4QbbUkWFLrAraka4ODVpwDxNWpsEOU9O8hqMiJGrYXEpnK4YAk7nhZZ3Vvx8dMU4tnLVlbzqt73jrhMVt8bTuiypVUrFXzm71VCou1cFa3R1bP8PR6BOD+gKCT/wh+3zLN1RHZfYPf0ZsJDCkuOwkUxcl74QGv8K8De7Y8SmpIljd/33j+MUTg3/ms+5En1qM1Qlgoyk2FMSBuWFNhKVjEVGi+enKto6TGDbDgi6j2VOhZPhzSqT8uouHzWUJyYG7T/Ik+fQjLBtRMgGbp2YkzI2NjYyYjE0ZWY3OTdlOWE1MjU0ZTc4OTYyZmQwYzc2ZA=='
+de_UDID = '1cb7e553448d44cc8e8ae15634490315'
 
 b64 = module.Base64(response)
 
@@ -9,7 +9,7 @@ key = b64.key
 data = b64.data
 iv = str.encode(de_UDID[0:16])
 
-result = module.AESCBC.decrypt(key,iv,data)
+result = module.AESCBC.decrypt(key, iv, data)
+print(result)
 result = module.MSP(result)
-
 print(result.unpack)
