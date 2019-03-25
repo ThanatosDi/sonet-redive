@@ -49,3 +49,22 @@ viewer_id 為雜湊碼，內容為 view id 經過 AES CBC 加密後再用 base64
 而加密的資料可以使用 key、iv 進行 AES CBC 解密，可以發現加密的資料為 view id  
 爾後 key 怎麼來? key 還可以再用 base64 反編碼，得到的結果是雜湊碼，類似 `dbdf17f7e3a6fa7c6439135c`  
 至於該來源目前未知
+
+# 目前成果
+
+當在遊戲內想要取得某人的資訊的時候，會同時送出請求給伺服器
+本文使用 Fiddler 協助抓取封包
+
+![image](https://github.com/ThanatosDi/sonet-redive/blob/master/Imgs/get_profile%20-%20game.png)
+在遊戲中取得某人資訊
+
+![image](https://github.com/ThanatosDi/sonet-redive/blob/master/Imgs/get_profile%20-%20fiddler.png)
+將會同時請求至伺服器，取得該玩家資訊
+
+
+![image](https://github.com/ThanatosDi/sonet-redive/blob/master/Imgs/get_profile%20-%20%E8%A7%A3%E5%AF%86.png)
+~~過程就不解釋了，總之就是這樣那樣 自己看程式理解吧~~
+使用程式解密(該程式路徑 相對於本github為 /sonet-redive/SentenceDot/sentencedot3.py)
+
+![image](https://github.com/ThanatosDi/sonet-redive/blob/master/Imgs/get_profile%20-%20%E6%AF%94%E5%B0%8D.png)
+最後附上把json整理好後的對比圖
